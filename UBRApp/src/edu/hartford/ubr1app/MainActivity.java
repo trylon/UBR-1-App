@@ -1,4 +1,8 @@
-package com.example.myfirstapp;
+package edu.hartford.ubr1app;
+
+import com.example.myfirstapp.R;
+import com.example.myfirstapp.R.layout;
+import com.example.myfirstapp.R.menu;
 
 import android.os.Bundle;
 import android.app.Activity;
