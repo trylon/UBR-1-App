@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.view.Menu;
 //test comment
 //test comment 2
+//test comment 3
 public class MainActivity extends Activity {
 
     @Override
