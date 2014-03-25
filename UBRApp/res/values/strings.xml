@@ -4,5 +4,6 @@
     <string name="app_name">UBR-1 App</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world! </string>
+    <string name="black">#000000</string>
 
 </resources>
