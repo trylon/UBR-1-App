@@ -56,15 +56,15 @@ public class MainActivity extends Activity {
      */
     private void updateViews(){
     	//update connect button
-    	Button connect = (Button)findViewById(R.id.connect); 
-    	Button drive = (Button)findViewById(R.id.drive);
+    	connectButton = (Button)findViewById(R.id.connect); 
+    	driveButton = (Button)findViewById(R.id.drive);
     	if(connected){
-    		connect.setText(R.string.connect);
-    		drive.setVisibility(View.VISIBLE);
+    		connectButton.setText(R.string.disconnect);
+    		driveButton.setVisibility(View.VISIBLE);
     	}
     	else{
-    		connect.setText(R.string.disconnect);
-    		drive.setVisibility(View.INVISIBLE);
+    		connectButton.setText(R.string.connect);
+    		driveButton.setVisibility(View.INVISIBLE);
     	}
     }
 }
