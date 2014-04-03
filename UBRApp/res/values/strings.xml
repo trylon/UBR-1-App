@@ -3,6 +3,15 @@
 
     <string name="app_name">UBR-1 App</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world! </string>
+
+    <color name="black">#000000</color>
+
+    <string name="ipaddress">IP Address:</string>
+
+    <color name="white">#FFFFFF</color>
+
+    <string name="connect">Connect</string>
+    <string name="title_activity_connection">ConnectionActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
