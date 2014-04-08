@@ -3,7 +3,12 @@
 
     <string name="app_name">UBR-1 App</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world! </string>
     <string name="black">#000000</string>
+    <string name="Forward">Forward</string>
+    <string name="StrafeLeft">Strafe Left</string>
+    <string name="StrafeRight">Strafe Right</string>
+    <string name="TurnRight">Turn Right</string>
+    <string name="TurnLeft">Turn Left</string>
+    <string name="Stop">Stop</string>
 
 </resources>
