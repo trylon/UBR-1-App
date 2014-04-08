@@ -1,12 +1,9 @@
 package edu.hartford.ubr1app;
 
-import com.example.myfirstapp.R;
-import com.example.myfirstapp.R.layout;
-import com.example.myfirstapp.R.menu;
-
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
+
 //test comment
 public class MainActivity extends Activity {
 
