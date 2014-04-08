@@ -28,10 +28,12 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f090003;
+        public static final int action_settings=0x7f090005;
         public static final int btnConnect=0x7f090000;
         public static final int ipAddr=0x7f090001;
-        public static final int ipAddrLabel=0x7f090002;
+        public static final int ipAddrLabel=0x7f090004;
+        public static final int port=0x7f090003;
+        public static final int portLabel=0x7f090002;
     }
     public static final class layout {
         public static final int activity_connection=0x7f030000;
@@ -47,6 +49,7 @@ public final class R {
         public static final int connect=0x7f050003;
         public static final int hello_world=0x7f050005;
         public static final int ipaddress=0x7f050002;
+        public static final int portText=0x7f050006;
         public static final int title_activity_connection=0x7f050004;
     }
     public static final class style {

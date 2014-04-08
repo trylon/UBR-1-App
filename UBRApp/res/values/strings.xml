@@ -13,5 +13,6 @@
     <string name="connect">Connect</string>
     <string name="title_activity_connection">ConnectionActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="portText">Port:</string>
 
 </resources>

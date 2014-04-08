@@ -23,6 +23,8 @@ public class ConnectionActivity extends Activity {
 	private static final Pattern PARTIAl_IP_ADDRESS = Pattern
 			.compile("^((25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[0-9])\\.){0,3}"
 					+ "((25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[0-9])){0,1}$");
+	
+	public final static String IP_PORT = "edu.hartford.ubr1app.IP_PORT";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,11 @@ public class ConnectionActivity extends Activity {
 
 	public void startNewActv(View view)
 	{
+		EditText ipField = (EditText)findViewById(R.id.ipAddr);
+		EditText portField = (EditText)findViewById(R.id.port);
+		String ipport = ipField.getText().toString() + ":" + portField.getText().toString();
 		Intent intent = new Intent(this, MainActivity.class);
+		intent.putExtra(IP_PORT, ipport);
         startActivity(intent);
 	}
 	

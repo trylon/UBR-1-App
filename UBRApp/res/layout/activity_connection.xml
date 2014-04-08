@@ -23,7 +23,7 @@
         android:id="@+id/ipAddr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnConnect"
+        android:layout_above="@+id/portLabel"
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:gravity="center"
@@ -31,6 +31,18 @@
         android:textColor="@color/white" >
 
         <requestFocus />
+    </EditText>
+    
+        <EditText
+        android:id="@+id/port"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnConnect"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="phone"
+        android:textColor="@color/white" >
     </EditText>
 
     <TextView
@@ -40,6 +52,16 @@
         android:layout_above="@+id/ipAddr"
         android:layout_centerHorizontal="true"
         android:text="@string/ipaddress"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white" />
+    
+    <TextView
+        android:id="@+id/portLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/port"
+        android:layout_centerHorizontal="true"
+        android:text="@string/portText"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/white" />
 
