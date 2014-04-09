@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 //test comment
 public class MainActivity extends Activity {
-
+	
+	public final static String IP_PORT = "edu.hartford.ubr1app.IP_PORT";
+	private String socketString;
 	private boolean connected;
 	
 	private Button connectButton;
@@ -22,22 +24,22 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         connected = false;
-        
-        this.updateViews();
+        updateViews();
         
         connectButton.setOnClickListener(new View.OnClickListener() {
 
 	        public void onClick(View view) {
-	        	//Intent connectIntent = new Intent(this, going to);
-	        	//startActivity(connectIntent);
+	        	//Intent connectIntent = new Intent(this, ConnectionActivity.class);
+	            //startActivity(connectIntent); 
 	        }
 	    });
         
         driveButton.setOnClickListener(new View.OnClickListener() {
 
 	        public void onClick(View view) {
-	        	//Intent driveIntent = new Intent(this, going to);
-	        	//startActivity(driveIntent);
+	        	/*Intent driveIntent = new Intent(this, DashboardActivity.class);
+	        	driveIntent.putExtra(IP_PORT, socketString);
+	        	startActivity(driveIntent);*/
 	        }
 	    });
     }
@@ -47,6 +49,23 @@ public class MainActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+    
+    @Override
+    public void onResume(){
+    	super.onResume();
+    	
+    	/*Intent returnIntent = getIntent();
+    
+    	socketString = returnIntent.getStringExtra(ConnectionActivity.IP_PORT);
+    	//Have Connection activity send us this specific test ip for now...
+    	if(socketString.equals("127.0.0.1:4096"))
+    	{
+    		connected = true;
+    		updateViews();
+    	}*/
+    	
+    	
     }
     
     /**
