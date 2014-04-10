@@ -8,6 +8,7 @@
 
     <string name="connect">Connect</string>
     <string name="title_activity_connection">ConnectionActivity</string>
+    <string name="title_activity_dashboard">DashboardActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="portText">Port:</string>
 
@@ -15,4 +16,13 @@
     <string name="drive">Drive</string>
     <string name="header">Header</string>
 
+    <string name="app_name">UBR-1 App</string>
+
+    <string name="black">#000000</string>
+    <string name="Forward">Forward</string>
+    <string name="StrafeLeft">Strafe Left</string>
+    <string name="StrafeRight">Strafe Right</string>
+    <string name="TurnRight">Turn Right</string>
+    <string name="TurnLeft">Turn Left</string>
+    <string name="Stop">Stop</string>
 </resources>

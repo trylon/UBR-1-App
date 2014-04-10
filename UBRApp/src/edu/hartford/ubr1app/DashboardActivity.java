@@ -1,5 +1,6 @@
 package edu.hartford.ubr1app;
 
+<<<<<<< HEAD:UBRApp/src/edu/hartford/ubr1app/MainActivity.java
 import edu.hartford.ubr1app.R;
 import edu.hartford.ubr1app.R.layout;
 import edu.hartford.ubr1app.R.menu;
@@ -11,6 +12,14 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+=======
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+
+//test comment
+public class DashboardActivity extends Activity {
+>>>>>>> 5cebaabb82a412fc40070c12b9540399aadaaeac:UBRApp/src/edu/hartford/ubr1app/DashboardActivity.java
 
 public class MainActivity extends Activity {
 	
@@ -24,11 +33,16 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+<<<<<<< HEAD:UBRApp/src/edu/hartford/ubr1app/MainActivity.java
         setContentView(R.layout.activity_main);
         connected = false;
         updateViews();
         
         connectButton.setOnClickListener(new View.OnClickListener() {
+=======
+        setContentView(R.layout.activity_dashboard);
+    }
+>>>>>>> 5cebaabb82a412fc40070c12b9540399aadaaeac:UBRApp/src/edu/hartford/ubr1app/DashboardActivity.java
 
 	        public void onClick(View view) {
 	        	//Intent connectIntent = new Intent(this, ConnectionActivity.class);

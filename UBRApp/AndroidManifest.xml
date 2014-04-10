@@ -30,6 +30,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.hartford.ubr1app.ConnectionActivity" />
         </activity>
+        <activity
+            android:name="edu.hartford.ubr1app.DashboardActivity"
+            android:label="@string/title_activity_dashboard"
+            android:parentActivityName="edu.hartford.ubr1app.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.hartford.ubr1app.DashboardActivity" />
+        </activity>
     </application>
 
 </manifest>
