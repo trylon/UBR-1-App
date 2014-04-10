@@ -26,7 +26,8 @@
             android:text="@string/connect"
             android:layout_width="match_parent"
         	android:layout_height="wrap_content"
-        	android:layout_marginBottom="@dimen/button_bottom_margin"/>
+        	android:layout_marginBottom="@dimen/button_bottom_margin"
+        	android:onClick="connectOnClick"/>
 
         <Button
             android:id="@+id/drive"
