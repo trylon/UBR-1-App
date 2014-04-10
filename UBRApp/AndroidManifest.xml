@@ -14,8 +14,8 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="edu.hartford.ubr1app.ConnectionActivity"
-            android:label="@string/title_activity_connection" >
+            android:name="edu.hartford.ubr1app.MainActivity"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,12 +23,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="edu.hartford.ubr1app.MainActivity"
-            android:label="@string/app_name"
-            android:parentActivityName="edu.hartford.ubr1app.ConnectionActivity" >
+            android:name="edu.hartford.ubr1app.ConnectionActivity"
+            android:label="@string/title_activity_connection"
+            android:parentActivityName="edu.hartford.ubr1app.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="edu.hartford.ubr1app.MainActivity" />
+                android:value="edu.hartford.ubr1app.ConnectionActivity" />
         </activity>
     </application>
 
