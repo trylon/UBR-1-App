@@ -2,10 +2,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ababff"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
+<<<<<<< HEAD
 </RelativeLayout>
+=======
+    <ImageView android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:contentDescription="@string/header"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+    
+    <LinearLayout
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/header">
+        <Button
+            android:id="@+id/connect"
+            android:text="@string/connect"
+            android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_marginBottom="@dimen/button_bottom_margin"/>
+
+        <Button
+            android:id="@+id/drive"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/drive" />
+
+    </LinearLayout>
+
+</RelativeLayout>
+>>>>>>> Main_Interface
