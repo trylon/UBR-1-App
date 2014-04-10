@@ -9,9 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-<<<<<<< HEAD
-</RelativeLayout>
-=======
     <ImageView android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -40,4 +37,3 @@
     </LinearLayout>
 
 </RelativeLayout>
->>>>>>> Main_Interface

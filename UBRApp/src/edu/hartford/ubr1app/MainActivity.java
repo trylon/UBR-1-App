@@ -1,12 +1,8 @@
 package edu.hartford.ubr1app;
 
-<<<<<<< HEAD
 import edu.hartford.ubr1app.R;
 import edu.hartford.ubr1app.R.layout;
 import edu.hartford.ubr1app.R.menu;
-=======
-
->>>>>>> Main_Interface
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -15,9 +11,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-//test comment
-//test comment 2
-//test comment 3
+
 public class MainActivity extends Activity {
 	
 	public final static String IP_PORT = "edu.hartford.ubr1app.IP_PORT";
