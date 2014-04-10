@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.view.Menu;
 
 //test comment
-public class MainActivity extends Activity {
+public class DashboardActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_dashboard);
     }
 
 
