@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.myfirstapp"
+    package="edu.hartford.ubr1app"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -21,6 +21,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="edu.hartford.ubr1app.ConnectionActivity"
+            android:label="@string/title_activity_connection"
+            android:parentActivityName="edu.hartford.ubr1app.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.hartford.ubr1app.ConnectionActivity" />
         </activity>
     </application>
 

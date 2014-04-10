@@ -1,13 +1,15 @@
 package edu.hartford.ubr1app;
 
-import com.example.myfirstapp.R;
-import com.example.myfirstapp.R.layout;
-import com.example.myfirstapp.R.menu;
+import edu.hartford.ubr1app.R;
+import edu.hartford.ubr1app.R.layout;
+import edu.hartford.ubr1app.R.menu;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 //test comment
+//test comment 2
+//test comment 3
 public class MainActivity extends Activity {
 
     @Override
