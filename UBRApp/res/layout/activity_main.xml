@@ -14,30 +14,57 @@
         android:layout_height="100dp"
         android:contentDescription="@string/header"
         android:src="@drawable/nao_head"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_marginBottom="@dimen/activity_vertical_margin"/>
     
     <LinearLayout
-        android:gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_below="@id/header">
-        <Button
-            android:id="@+id/connect"
+        	
+        	<View
+        	android:id="@+id/empty_left"
             android:text="@string/connect"
-            android:layout_width="match_parent"
-        	android:layout_height="wrap_content"
-        	android:layout_marginBottom="@dimen/button_bottom_margin"
-        	android:onClick="connectOnClick"/>
-
-        <Button
-            android:id="@+id/drive"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/drive"
-            android:onClick="driveOnClick"/>
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+        	android:layout_weight="3"/>
         
+        	
+        	<LinearLayout
+        	android:id="@+id/main_button_container"
+        	android:layout_width="0dp"
+        	android:layout_height="match_parent"
+        	android:layout_weight="5"
+        	android:orientation="vertical">
+		        	
+		        	<Button
+		            android:id="@+id/connect"
+		            android:text="@string/connect"
+		            android:layout_width ="fill_parent"
+		        	android:layout_height="wrap_content"
+		        	android:onClick="connectOnClick"/>
+		        	
+		        	<Button
+		            android:id="@+id/drive"
+		            android:text="@string/drive"
+		            android:layout_width ="fill_parent"
+		        	android:layout_height="wrap_content"
+		        	android:paddingTop="20dp"
+		        	android:paddingBottom="20dp"
+		        	android:onClick="driveOnClick"/>
+	        	
+        	</LinearLayout>
+        	
+        	<View
+        	     android:id="@+id/empty_right"
+            	 android:text="@string/connect"
+            	 android:layout_width="0dp"
+        		 android:layout_height="wrap_content"
+        		 android:layout_weight="3"/>
 
+      
     </LinearLayout>
 
 </RelativeLayout>
