@@ -24,4 +24,5 @@
     <string name="TurnRight">Turn Right</string>
     <string name="TurnLeft">Turn Left</string>
     <string name="Stop">Stop</string>
+    <string name="ControllerOutput">idle</string>
 </resources>
