@@ -203,6 +203,7 @@ public final class R {
     public static final class string {
         public static final int ControllerOutput=0x7f060012;
         public static final int Forward=0x7f06000c;
+        public static final int OK=0x7f060013;
         public static final int Stop=0x7f060011;
         public static final int StrafeLeft=0x7f06000d;
         public static final int StrafeRight=0x7f06000e;
@@ -214,8 +215,10 @@ public final class R {
         public static final int connect=0x7f060002;
         public static final int disconnect=0x7f060007;
         public static final int drive=0x7f060008;
+        public static final int error=0x7f060014;
         public static final int header=0x7f060009;
         public static final int hello_world=0x7f060005;
+        public static final int ip_failure=0x7f060015;
         public static final int ipaddress=0x7f060001;
         public static final int portText=0x7f060006;
         public static final int title_activity_connection=0x7f060003;

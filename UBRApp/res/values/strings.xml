@@ -25,4 +25,7 @@
     <string name="TurnLeft">Turn Left</string>
     <string name="Stop">Stop</string>
     <string name="ControllerOutput">idle</string>
+    <string name="OK">OK</string>
+    <string name="error">Error</string>
+    <string name="ip_failure">The IP address you entered could not be reached! Please try again.</string>
 </resources>
