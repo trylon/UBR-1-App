@@ -25,4 +25,14 @@
     <string name="TurnLeft">Turn Left</string>
     <string name="Stop">Stop</string>
     <string name="ControllerOutput">idle</string>
+    <string name="StopCommand">Stop Walking</string>
+    <string name="WalkCommand">Walk Forward</string>
+    <string name="TurnLeftCommand">Turn Robot Left</string>
+    <string name="TurnRightCommand">Turn Robot Right</string>
+    <string name="StepLeftCommand">Sidestep Robot Left</string>
+    <string name="StepRightCommand">Sidestep Robot Right</string>
+    <string name="StiffenCommand">Stiffen Robot Joints</string>
+    <string name="UnstiffenCommand">Unstiffen Robot Joints</string>
+    <string name="StandCommand">Stand Robot Up</string>
+    <string name="SitCommand">Sit Robot Down</string>
 </resources>
