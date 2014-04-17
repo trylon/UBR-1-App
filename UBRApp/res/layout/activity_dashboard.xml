@@ -14,8 +14,7 @@
         android:layout_width="fill_parent"
         android:layout_height="300dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/ControllerOutput" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/button3"
@@ -23,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/Button01"
         android:layout_alignTop="@+id/button2"
+        android:onClick="stepLeftOnClick"
         android:text="@string/StrafeLeft"
         android:textSize="12sp" />
 
@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/Button02"
         android:layout_alignTop="@+id/button2"
+        android:onClick="stepRightOnClick"
         android:text="@string/StrafeRight"
         android:textSize="12sp" />
 
@@ -42,6 +43,7 @@
         android:layout_above="@+id/button2"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
+        android:onClick="forwardOnClick"
         android:text="@string/Forward"
         android:textSize="12sp" />
 
@@ -62,6 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/outputTextView1"
         android:layout_alignTop="@+id/button1"
+        android:onClick="turnRightOnClick"
         android:text="@string/TurnRight"
         android:textSize="12sp" />
 
@@ -72,6 +75,7 @@
         android:layout_alignBaseline="@+id/button1"
         android:layout_alignBottom="@+id/button1"
         android:layout_alignLeft="@+id/outputTextView1"
+        android:onClick="turnLeftOnClick"
         android:text="@string/TurnLeft"
         android:textSize="12sp" />
         
