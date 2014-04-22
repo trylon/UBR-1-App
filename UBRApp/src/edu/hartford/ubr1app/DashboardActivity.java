@@ -6,9 +6,17 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
-//test comment
+/**
+ * Dash Board Activity 
+ * 
+ * Handles controlling the robot remotely by dispatching commands.
+ * 
+ * @author bShipman
+ *
+ */
 public class DashboardActivity extends Activity {
 	
+	// Boolean flags that will be used to keep the same message from being sent multiple times.
 	private boolean previousStop = false;
 	private boolean previousForward = false;
 	private boolean previousLeftTurn = false;
