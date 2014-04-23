@@ -11,7 +11,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="portText">Port:</string>
 
-    <string name="disconnect">Disconnect</string>
+    <string name="manage_connection">Manage Connection</string>
     <string name="drive">Drive</string>
     <string name="header">Header</string>
 

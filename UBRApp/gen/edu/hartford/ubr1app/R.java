@@ -223,13 +223,13 @@ public final class R {
         public static final int app_name=0x7f06000a;
         public static final int black=0x7f06000b;
         public static final int connect=0x7f060002;
-        public static final int disconnect=0x7f060007;
         public static final int drive=0x7f060008;
         public static final int error=0x7f060014;
         public static final int header=0x7f060009;
         public static final int hello_world=0x7f060005;
         public static final int ip_failure=0x7f060015;
         public static final int ipaddress=0x7f060001;
+        public static final int manage_connection=0x7f060007;
         public static final int portText=0x7f060006;
         public static final int title_activity_connection=0x7f060003;
         public static final int title_activity_dashboard=0x7f060004;

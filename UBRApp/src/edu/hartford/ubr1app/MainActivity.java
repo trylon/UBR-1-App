@@ -16,18 +16,15 @@ public class MainActivity extends Activity {
 
 	public final static String IP_PORT = "edu.hartford.ubr1app.IP_PORT";
 	private String socketString;
-	private boolean connected;
 
-	private Button connectButton;
-	private Button driveButton;
+	//private Button connectButton;
+	//private Button driveButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		connected = false;
 		updateViews();
-
 	}
 
 	public void connectOnClick(View view) {
@@ -49,38 +46,46 @@ public class MainActivity extends Activity {
 	}
 
 	@Override
-	public void onResume() {
+	public void onResume()
+	{
 		super.onResume();
-
+		
+		socketString = null;
 		Intent returnIntent = getIntent();
-		if (returnIntent != null) {
-			socketString = returnIntent
-					.getStringExtra(ConnectionActivity.IP_PORT);
-			if (socketString != null) {
-				// Have Connection activity send us this specific test ip for
-				// now...
-				if (socketString.equals("127.0.0.1:4096")) {
-					connected = true;
-					updateViews();
-				}
-			}
-		}
+		if (returnIntent != null) 
+		{
+			socketString = returnIntent.getStringExtra(ConnectionActivity.IP_PORT);
+			updateViews();
 
+		}
 	}
 
 	/**
 	 * Call updateViews when something changes in the application
 	 */
-	private void updateViews() {
+	private void updateViews() 
+	{
 		// update connect button
-		connectButton = (Button) findViewById(R.id.connect);
-		driveButton = (Button) findViewById(R.id.drive);
-		if (connected) {
-			connectButton.setText(R.string.disconnect);
+		Button connectButton = (Button) findViewById(R.id.connect);
+		Button driveButton = (Button) findViewById(R.id.drive);
+		
+		if(isValidSocket(socketString)) 
+		{
+			connectButton.setText(R.string.manage_connection);
 			driveButton.setVisibility(View.VISIBLE);
-		} else {
+		} 
+		else 
+		{
 			connectButton.setText(R.string.connect);
 			driveButton.setVisibility(View.INVISIBLE);
 		}
+	}
+	
+	
+	public boolean isValidSocket(String socket)
+	{
+		//return false;
+		return socket != null;
+		
 	}
 }
