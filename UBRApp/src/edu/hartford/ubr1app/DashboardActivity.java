@@ -55,6 +55,7 @@ public class DashboardActivity extends Activity {
 	@Override
 	public void onPause() {
 		super.onPause();
+		stopOnClick(null);
 		try {
 			socket.close();
 		} catch (Exception ex) {
@@ -65,6 +66,7 @@ public class DashboardActivity extends Activity {
 	@Override
 	public void onStop() {
 		super.onStop();
+		stopOnClick(null);
 		try {
 			socket.close();
 		} catch (Exception ex) {
