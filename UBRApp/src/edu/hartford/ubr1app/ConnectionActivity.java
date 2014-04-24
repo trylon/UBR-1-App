@@ -23,11 +23,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.widget.EditText;
+
 /**
- * Connection Activity
- * Handles getting an IP and port number and verifying the IP responds to ping tests
+ * Connection Activity Handles getting an IP and port number and verifying the
+ * IP responds to ping tests
+ * 
  * @author roberthilton
- *
+ * 
  */
 public class ConnectionActivity extends Activity {
 	private static final Pattern PARTIAl_IP_ADDRESS = Pattern
@@ -39,15 +41,13 @@ public class ConnectionActivity extends Activity {
 	private boolean retval;
 
 	/**
-	 * Called when the activity is first created
-	 * Establishes the text field validation action methods
+	 * Called when the activity is first created Establishes the text field
+	 * validation action methods
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_connection);
-		// Show the Up button in the action bar.
-		setupActionBar();
 
 		// Validation code from
 		// http://stackoverflow.com/questions/3698034/validating-ip-in-android/11545229#11545229
@@ -104,14 +104,22 @@ public class ConnectionActivity extends Activity {
 	}
 
 	/**
-	 * Method to pass the IP and Port to the MainActivity. Checks whether the IP is valid using a ping.
-	 * A dialog is displayed to show wether the result is successful or not.
-	 * @param view - The current view passed into the handler method.
+	 * Method to pass the IP and Port to the MainActivity. Checks whether the IP
+	 * is valid using a ping. A dialog is displayed to show whether the result is
+	 * successful or not.
+	 * 
+	 * @param view
+	 *            - The current view passed into the handler method.
 	 */
 	public void startNewActv(View view) {
 		EditText ipField = (EditText) findViewById(R.id.ipAddr);
 		EditText portField = (EditText) findViewById(R.id.port);
 
+		if (ipField.getText().toString().equals("") || portField.getText().toString().equals(""))
+		{
+			return;
+		}
+		
 		// Perform PING test
 
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
@@ -153,12 +161,13 @@ public class ConnectionActivity extends Activity {
 		}
 
 		AlertDialog.Builder bldDlg = new AlertDialog.Builder(this);
-		bldDlg.setMessage("Connection to " + ipField.getText().toString() + " was successful!");
+		bldDlg.setMessage("Connection to " + ipField.getText().toString()
+				+ " was successful!");
 		bldDlg.setCancelable(false);
 
 		AlertDialog alt = bldDlg.create();
 		alt.show();
-		
+
 		String ipport = ipField.getText().toString() + ":"
 				+ portField.getText().toString();
 		Intent intent = new Intent(this, MainActivity.class);
@@ -166,14 +175,29 @@ public class ConnectionActivity extends Activity {
 		startActivity(intent);
 	}
 
-	/**
-	 * Set up the {@link android.app.ActionBar}, if the API is available.
-	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private void setupActionBar() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			getActionBar().setDisplayHomeAsUpEnabled(true);
+	public void startNewActvUnit(View view) {
+		EditText ipField = (EditText) findViewById(R.id.ipAddr);
+		EditText portField = (EditText) findViewById(R.id.port);
+
+		// Perform PING test
+
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+				.permitAll().build();
+		StrictMode.setThreadPolicy(policy);
+		try {
+			InetAddress inetAddr = InetAddress.getByName(ipField.getText()
+					.toString());
+			if (!inetAddr.isReachable(2000)) {
+				return;
+			}
+		} catch (Exception ex) {
+
 		}
+		String ipport = ipField.getText().toString() + ":"
+				+ portField.getText().toString();
+		Intent intent = new Intent(this, MainActivity.class);
+		intent.putExtra(IP_PORT, ipport);
+		startActivity(intent);
 	}
 
 	/**
