@@ -38,8 +38,6 @@ public class ConnectionActivity extends Activity {
 	private static final Pattern PORT_VALUE = Pattern.compile("^\\d+$");
 	public final static String IP_PORT = "edu.hartford.ubr1app.IP_PORT";
 
-	private boolean retval;
-
 	/**
 	 * Called when the activity is first created Establishes the text field
 	 * validation action methods
