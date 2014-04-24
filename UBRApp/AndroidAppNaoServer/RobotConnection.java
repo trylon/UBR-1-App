@@ -18,12 +18,12 @@ public class RobotConnection {
         tts = new ALTextToSpeechProxy(ip, port);
 
         try {
-            tts.say("Hello, I am connected to the Android Application Nao Server.");
-            Thread.sleep(2000);
-            tts.say("Initializing Neaural Network");
-            Thread.sleep(5000);
-            tts.say("Gathering Back knowledge from internet.");
-            Thread.sleep(10000);
+            //tts.say("Hello, I am connected to the Android Application Nao Server.");
+            //Thread.sleep(2000);
+            //tts.say("Initializing Neaural Network");
+            //Thread.sleep(5000);
+            //tts.say("Gathering Back knowledge from internet.");
+            //Thread.sleep(10000);
             tts.say("Skynet online.");
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,10 +62,10 @@ public class RobotConnection {
         motion.moveInit();
 
         // Wait for ready.
-        motion.waitUntilMoveIsFinished();
+        //motion.waitUntilMoveIsFinished();
 
         // Move forward
-        motion.moveTo(0.5f, 0.0f, 0.0f);
+        motion.move(0.1f, 0.0f, 0.0f);
 
         System.out.println(motion.getSummary());
     }
@@ -82,14 +82,23 @@ public class RobotConnection {
         motion.moveInit();
 
         // Wait for hardward to finish moving
-        motion.waitUntilMoveIsFinished();
+        //motion.waitUntilMoveIsFinished();
 
         // Convert the turn amount to radians.
         float moveAmountRadians = DegreesToRadians(turnAmount);
 
+        if (moveAmountRadians < 0)
+        {
+        	motion.move(0.0f, 0.0f, -0.2f);
+        }
+        else
+        {
+        	motion.move(0.0f, 0.0f, 0.2f);
+        }
+        
         // Send turn command.
-        motion.moveTo(0.0f, 0.0f, moveAmountRadians);
-
+        
+        System.out.println("" + moveAmountRadians);
         System.out.println(motion.getSummary());
 
     }
@@ -106,13 +115,13 @@ public class RobotConnection {
         motion.moveInit();
 
         // Wait for hardward to finish moving.
-        motion.waitUntilMoveIsFinished();
+        //motion.waitUntilMoveIsFinished();
 
         // Start stepping
         if (left) {
-            motion.moveTo(0.0f, -0.5f, 0.0f);
+            motion.move(0.0f, 0.1f, 0.0f);
         } else {
-            motion.moveTo(0.0f, 0.5f, 0.0f);
+            motion.move(0.0f, -0.1f, 0.0f);
         }
 
         System.out.println(motion.getSummary());
@@ -123,7 +132,7 @@ public class RobotConnection {
      */
     public void Stand() {
         motion.stopMove();
-        posture.goToPosture("Stand", 1.0f);
+        posture.goToPosture("StandInit", 1.0f);
         System.out.println("Standing Up.");
     }
 
@@ -142,41 +151,8 @@ public class RobotConnection {
     }
 
     public void emergencyStop() {
-        motion.killAll();
-    }
-
-    public void testMethod() {
-        // This lets you use bound methods that expects ALValue from Java:
-        Variant names = new Variant(new String[]{"HeadYaw"});
-        Variant angles = new Variant(new float[]{-0.5f, 0.5f, 0.0f});
-        Variant times = new Variant(new float[]{1.0f, 2.0f, 3.0f});
-        Scanner sc = new Scanner(System.in);
-        String str = "";
-
-        motion.setStiffnesses(new Variant(new String("Body")), new Variant(
-                new Float(1.0f)));
-        posture.goToPosture("Stand", 0.5f);
-
-        while (str.compareTo("x") != 0) {
-            str = sc.next();
-            if (str.compareTo("h") == 0) {
-                // motion.setStiffnesses(new Variant(new String[] {"HeadYaw"}),
-                // new Variant(new float[] {1.0f}));
-                motion.angleInterpolation(names, angles, times, true);
-                // motion.setStiffnesses(new Variant(new String[] {"HeadYaw"}),
-                // new Variant(new float[] {0.0f}));
-            }
-            if (str.compareTo("m") == 0) {
-                // motion.setStiffnesses(new Variant(new String ("Body")), new
-                // Variant(new Float (1.0f)));
-                motion.moveTo(1.2f, 1.2f, 0.0f);
-                // motion.setStiffnesses(new Variant(new String ("Body")), new
-                // Variant(new Float (0.0f)));
-            }
-        }
-        motion.setStiffnesses(new Variant(new String("Body")), new Variant(
-                new Float(0.0f)));
-        sc.close();
+    	Sit();
+    	Unstiffen();
     }
 
     private static float DegreesToRadians(float deg) {

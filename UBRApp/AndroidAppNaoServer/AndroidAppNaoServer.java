@@ -144,7 +144,7 @@ public class AndroidAppNaoServer {
                                 break;
 
                             case "Turn Robot Left":
-                                robot.Turn(-90.0f);
+                                robot.Turn(90.0f);
                                 break;
 
                             case "Turn Robot Right":

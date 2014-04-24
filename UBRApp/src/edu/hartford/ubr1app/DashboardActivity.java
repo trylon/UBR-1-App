@@ -55,7 +55,7 @@ public class DashboardActivity extends Activity {
 	@Override
 	public void onPause() {
 		super.onPause();
-		stopOnClick(null);
+		eStopOnClick(null);
 		try {
 			socket.close();
 		} catch (Exception ex) {
@@ -66,7 +66,7 @@ public class DashboardActivity extends Activity {
 	@Override
 	public void onStop() {
 		super.onStop();
-		stopOnClick(null);
+		eStopOnClick(null);
 		try {
 			socket.close();
 		} catch (Exception ex) {
@@ -113,7 +113,7 @@ public class DashboardActivity extends Activity {
 
 		}
 	}
-
+	
 	/**
 	 * Emergency Stop Message Dispatched that stops, sits and un-stiffens the
 	 * robot.
@@ -169,6 +169,14 @@ public class DashboardActivity extends Activity {
 		tryConnectSocket();
 		outputSocketWriter.println(getResources().getString(R.string.EStop));
 		tryDisconnectSocket();
+		previousStop = true;
+		isStiffened = false;
+		isStanding = false;
+		previousForward = false;
+		previousLeftTurn = false;
+		previousRightTurn = false;
+		previousLeftStep = false;
+		previousRightStep = false;
 	}
 
 	/**
