@@ -160,6 +160,18 @@ public class DashboardActivity extends Activity {
 	}
 
 	/**
+	 * Emergency Stop
+	 */
+	public void eStopOnClick(View view) {
+		TextView t = new TextView(this);
+		t = (TextView) findViewById(R.id.outputTextView1);
+		t.setText(getResources().getString(R.string.EStop));
+		tryConnectSocket();
+		outputSocketWriter.println(getResources().getString(R.string.EStop));
+		tryDisconnectSocket();
+	}
+
+	/**
 	 * Message Dispatcher that moves the robot forward while pressed.
 	 * 
 	 * @param veiw

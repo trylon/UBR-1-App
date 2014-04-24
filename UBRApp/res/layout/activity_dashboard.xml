@@ -78,5 +78,17 @@
         android:onClick="turnLeftOnClick"
         android:text="@string/TurnLeft"
         android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/ButtonEStop"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/button1"
+        android:onClick="eStopOnClick"
+        android:text="@string/EStop"
+        android:textColor="@color/StopButton"
+        android:textSize="20sp" />
         
 </RelativeLayout>

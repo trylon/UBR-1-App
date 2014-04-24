@@ -38,4 +38,5 @@
     <string name="UnstiffenCommand">Unstiffen Robot Joints</string>
     <string name="StandCommand">Stand Robot Up</string>
     <string name="SitCommand">Sit Robot Down</string>
+    <string name="EStop">Emergency Stop</string>
 </resources>
