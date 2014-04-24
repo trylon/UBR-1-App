@@ -23,7 +23,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.widget.EditText;
-
+/**
+ * Connection Activity
+ * Handles getting an IP and port number and verifying the IP responds to ping tests
+ * @author roberthilton
+ *
+ */
 public class ConnectionActivity extends Activity {
 	private static final Pattern PARTIAl_IP_ADDRESS = Pattern
 			.compile("^((25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[0-9])\\.){0,3}"
@@ -33,6 +38,10 @@ public class ConnectionActivity extends Activity {
 
 	private boolean retval;
 
+	/**
+	 * Called when the activity is first created
+	 * Establishes the text field validation action methods
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -94,6 +103,11 @@ public class ConnectionActivity extends Activity {
 		});
 	}
 
+	/**
+	 * Method to pass the IP and Port to the MainActivity. Checks whether the IP is valid using a ping.
+	 * A dialog is displayed to show wether the result is successful or not.
+	 * @param view - The current view passed into the handler method.
+	 */
 	public void startNewActv(View view) {
 		EditText ipField = (EditText) findViewById(R.id.ipAddr);
 		EditText portField = (EditText) findViewById(R.id.port);
@@ -162,6 +176,9 @@ public class ConnectionActivity extends Activity {
 		}
 	}
 
+	/**
+	 * Create options menu
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -169,6 +186,9 @@ public class ConnectionActivity extends Activity {
 		return true;
 	}
 
+	/**
+	 * Process item from menu
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
