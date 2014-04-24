@@ -9,165 +9,179 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+
 import javax.swing.JOptionPane;
 
 /**
- * Android 
+ * Android
+ * 
  * @author bShipman
  */
 public class AndroidAppNaoServer {
 
-    static String NAO_IPADDRESS;
-    static int NAO_PORT;
-    
-    /**
-     * @param args The port to listen for connections on.
-     * @throws IOException 
-     */
-    public static void main(String[] args) throws IOException 
-    {
-        String ipAddress = JOptionPane.showInputDialog(null, "Enter Nao's IP Address:", "Nao Connection.", JOptionPane.INFORMATION_MESSAGE);
-        String port = JOptionPane.showInputDialog(null, "Enter Nao's Port Number:", "Nao Connection.", JOptionPane.INFORMATION_MESSAGE);
-        String listenPort = JOptionPane.showInputDialog(null, "Enter Server Listening Port:", "Server Connection", JOptionPane.INFORMATION_MESSAGE);
-                
-        NAO_IPADDRESS = ipAddress;
-        NAO_PORT = Integer.parseInt(port);
-        
-        ServerSocket listener = new ServerSocket(Integer.parseInt(listenPort));
+	static String NAO_IPADDRESS;
+	static int NAO_PORT;
 
-        try {
+	/**
+	 * @param args
+	 *            The port to listen for connections on.
+	 * @throws IOException
+	 */
+	public static void main(String[] args) throws IOException {
+		boolean isNaoIPValid = false;
+		boolean isNaoPortValid = false;
+		boolean isServerPortValid = false;
+		String ipAddress = "";
+		String port = "";
+		String listenPort = "";
 
-            boolean socketOpen = true;
+		do {
+			ipAddress = JOptionPane.showInputDialog(null,
+					"Enter Nao's IP Address:", "Nao Connection.",
+					JOptionPane.INFORMATION_MESSAGE);
+			String[] addr = ipAddress.split("\\.");
+			if (addr.length == 4)
+			{
+				isNaoIPValid = true;
+				for (int i = 0; i < addr.length; i++)
+				{
+					try {
+						int lowerBound = 0;
+						int upperBound = 254;
+						if (i == 0 || i == 3)
+						{
+							lowerBound++;
+						}
+						int octet = Integer.parseInt(addr[i]);
+						if (octet < lowerBound || octet > upperBound )
+						{
+							isNaoIPValid &= false;
+						}
+					}
+					catch (Exception ex)
+					{
+						isNaoIPValid = false;
+					}
+				}
+			}
+		} while (!isNaoIPValid);
 
-            while (socketOpen) {
+		do {
+			port = JOptionPane.showInputDialog(null,
+					"Enter Nao's Port Number:", "Nao Connection.",
+					JOptionPane.INFORMATION_MESSAGE);
+			try {
+				int portTest = Integer.parseInt(port);
+				if (portTest > 0 && portTest <= 65535)
+					isNaoPortValid = true;
+			}
+			catch (Exception ex)
+			{
+				isNaoPortValid = false;
+			}
+		} while (!isNaoPortValid);
 
-                // Listen for connections.
-                Socket socket = listener.accept();
+		do {
+			listenPort = JOptionPane.showInputDialog(null,
+					"Enter Server Listening Port:", "Server Connection",
+					JOptionPane.INFORMATION_MESSAGE);
+			try {
+				int portTest = Integer.parseInt(listenPort);
+				if (portTest > 0 && portTest <= 65535)
+					isServerPortValid = true;
+			}
+			catch (Exception ex)
+			{
+				isServerPortValid = false;
+			}
+		} while (!isServerPortValid);
 
-                try {
-                    // Buffered reader.
-                    BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		NAO_IPADDRESS = ipAddress;
+		NAO_PORT = Integer.parseInt(port);
 
-                    String appString = input.readLine();
+		RobotConnection robot = new RobotConnection(NAO_IPADDRESS, NAO_PORT);
 
-                    // Temp Output String For reciept verification.
-                    System.out.println(appString);
+		ServerSocket listener = new ServerSocket(Integer.parseInt(listenPort));
 
-                    if (appString != null){
+		try {
 
-                        switch(appString){
-                            case "Shutdown Nao Server":
-                                System.out.println("Server Shutdown Remotely, Goodbuy.");
-                                socketOpen = false;             // Shutdown the server remotely.
-                                break;
+			boolean socketOpen = true;
 
-                            case "Stiffen Robot Joints":            
-                                Stiffen();
-                                break;                                    
+			while (socketOpen) {
 
-                            case "Unstiffen Robot Joints":      
-                                Unstiffen();
-                                break;                                    
+				// Listen for connections.
+				Socket socket = listener.accept();
 
-                            case "Stand Robot Up":
-                                Stand();
-                                break;                                    
+				try {
+					// Buffered reader.
+					BufferedReader input = new BufferedReader(
+							new InputStreamReader(socket.getInputStream()));
 
-                            case "Sit Robot Down":
-                                Sit();
-                                break;
+					String appString = input.readLine();
 
-                            case "Walk Forward":
-                                Walk();
-                                break;
+					// Temp Output String For reciept verification.
+					System.out.println(appString);
 
-                            case "Turn Robot Left":
-                                Turn(-90.0f);
-                                break;
+					if (appString != null) {
 
-                            case "Turn Robot Right":
-                                Turn(90.0f);
-                                break;
+						switch (appString) {
+						case "Shutdown Nao Server":
+							robot.Stop();
+							System.out
+									.println("Server Shutdown Remotely, Goodbuy.");
+							socketOpen = false; // Shutdown the server remotely.
+							break;
 
-                            case "Sidestep Robot Left":
-                                Strafe(true);
-                                break;
+						case "Stiffen Robot Joints":
+							robot.Stiffen();
+							break;
 
-                            case "Sidestep Robot Right":
-                                Strafe(false);
-                                break;
+						case "Unstiffen Robot Joints":
+							robot.Unstiffen();
+							break;
 
-                            case "Stop Walking":
-                            default:
-                                Stop();
-                                break;
-                        }
+						case "Stand Robot Up":
+							robot.Stand();
+							break;
 
-                    }
-                }
-                finally {
-                    socket.close();
-                }
+						case "Sit Robot Down":
+							robot.Sit();
+							break;
 
-            }
-        }
-        finally {
-            listener.close();
-        }
-    }
-    
-    /**
-     * Stiffen Nao's joints for movement.
-     */
-    public static void Stiffen(){
-        System.out.println("Stiffening Joints");
-    }
-    
-    /**
-     * Unsitffen Nao's joints.
-     */
-    public static void Unstiffen(){
-        System.out.println("Relaxing Joints");
-    }
-    
-    /**
-     * Have Nao walk forward.
-     */
-    public static void Walk(){
-        System.out.println("Walking Forward");
-    }
-    
-    /**
-     * Have Nao turn.
-     * @param turnAmount Degrees to turn from current heading.
-     */
-    public static void Turn(float turnAmount){
-        System.out.println("Turning " + turnAmount + " degrees.");
-    }
-    
-    /**
-     * Have Nao Step left or right.
-     * @param left True to move left false to move right.
-     */
-    public static void Strafe(boolean left){
-        System.out.println("Stepping to the " + (left ? "left" : "right"));
-    }
-    
-    /**
-     * Stand Nao up.
-     */
-    public static void Stand(){
-        System.out.println("Standing Up.");
-    }
-    
-    /**
-     * Sit Nao down.
-     */
-    public static void Sit(){
-        System.out.println("Sitting Down.");
-    }
-    
-    public static void Stop(){
-        System.out.println("Stopping Movement.");
-    }
+						case "Walk Forward":
+							robot.Walk();
+							break;
+
+						case "Turn Robot Left":
+							robot.Turn(-90.0f);
+							break;
+
+						case "Turn Robot Right":
+							robot.Turn(-90.0f);
+							break;
+
+						case "Sidestep Robot Left":
+							robot.Strafe(true);
+							break;
+
+						case "Sidestep Robot Right":
+							robot.Strafe(false);
+							break;
+
+						case "Stop Walking":
+						default:
+							robot.Stop();
+							break;
+						}
+
+					}
+				} finally {
+					socket.close();
+				}
+
+			}
+		} finally {
+			listener.close();
+		}
+	}
 }
