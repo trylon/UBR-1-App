@@ -2,13 +2,22 @@ package edu.hartford.ubr1app;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Dash Board Activity
@@ -32,8 +41,12 @@ public class DashboardActivity extends Activity {
 	private boolean isStiffened = false;
 	private boolean isStanding = false;
 
-	private String ip;
-	private int port;
+	private boolean isVideoStarted = false;
+
+	protected String ip;
+	protected int port;
+	protected Timer videoTimer;
+	protected TimerTask vTimerTask;
 
 	Socket socket;
 	PrintWriter outputSocketWriter;
@@ -113,7 +126,7 @@ public class DashboardActivity extends Activity {
 
 		}
 	}
-	
+
 	/**
 	 * Emergency Stop Message Dispatched that stops, sits and un-stiffens the
 	 * robot.
@@ -157,6 +170,65 @@ public class DashboardActivity extends Activity {
 		previousRightTurn = false;
 		previousLeftStep = false;
 		previousRightStep = false;
+	}
+
+	public void updateVideo(View view) {
+		/*
+		if (!isVideoStarted) {
+			vTimerTask = new TimerTask() {
+
+				@Override
+				public void run() {
+					new ASyncVideo().execute();
+				}
+			};
+			videoTimer.scheduleAtFixedRate(vTimerTask, 0, 200);
+		}
+		else {
+			isVideoStarted = true;
+		}*/
+		new ASyncVideo().execute();
+	}
+
+	protected class ASyncVideo extends AsyncTask<Void, Void, byte[]> {
+
+		@Override
+		protected byte[] doInBackground(Void... params) {
+
+			byte[] arr = null;
+			Socket sImage = null;
+			String retval = "";
+			try {
+				sImage = new Socket(ip, port);
+				PrintWriter p = new PrintWriter(sImage.getOutputStream(), true);
+				BufferedReader r = new BufferedReader(new InputStreamReader(
+						sImage.getInputStream()));
+				p.println(getResources().getString(R.string.VideoCommand));
+				retval = r.readLine();
+				System.out.println(retval);
+				r.close();
+				p.close();
+				sImage.close();
+			} catch (Exception ex) {
+				return null;
+			}
+
+			if (!retval.equals("")) {
+				arr = Base64.decode(retval.getBytes(), Base64.DEFAULT);
+				return arr;
+			}
+
+			return null;
+		}
+
+		protected void onPostExecute(byte[] arr) {
+			if (arr != null) {
+				ImageView robotView = (ImageView) findViewById(R.id.robotImageView);
+				Bitmap bMap = BitmapFactory.decodeByteArray(arr, 0, arr.length);
+				robotView.setImageBitmap(bMap);
+			}
+		}
+
 	}
 
 	/**
@@ -268,6 +340,7 @@ public class DashboardActivity extends Activity {
 		previousRightTurn = true;
 		previousLeftStep = false;
 		previousRightStep = false;
+
 	}
 
 	/**
