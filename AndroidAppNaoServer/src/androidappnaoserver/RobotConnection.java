@@ -154,12 +154,12 @@ public class RobotConnection {
 
 	public String getVideoFrame() {
 
-		video.subscribe("NaoServer", 1, 13, 7);
+		video.subscribe("NaoServer", 1, 13, 1);
 
 		Variant remoteImage = video.getImageRemote("NaoServer");
 
 		Variant imageV = remoteImage.getElement(6);
-
+		video.unsubscribe("NaoServer");
 		byte[] binaryImage = imageV.toBinary();
 		return "";
 		// return Base64.encode(binaryImage);
