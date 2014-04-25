@@ -152,17 +152,28 @@ public class RobotConnection {
 		Unstiffen();
 	}
 
-	public String getVideoFrame() {
+	public byte[] getVideoFrame() {
 
-		video.subscribe("NaoServer", 1, 13, 1);
+		final String subscriberID = "NaoServer";
+		final int TOP_CAMERA = 0;
+		final int RESOLUTION_320px_240px = 1;
+		final int RESOLUTION_640px_480px = 2;
+		final int COLOR_RGB = 11;
+		final int FPS_5 = 5;
 
-		Variant remoteImage = video.getImageRemote("NaoServer");
+		video.subscribeCamera(subscriberID, TOP_CAMERA, RESOLUTION_640px_480px, COLOR_RGB, FPS_5);
+		
+		Variant remoteImage = video.getImageRemote(subscriberID);
 
 		Variant imageV = remoteImage.getElement(6);
-		video.unsubscribe("NaoServer");
-		byte[] binaryImage = imageV.toBinary();
-		return "";
-		// return Base64.encode(binaryImage);
+		byte[] imgData = imageV.toBinary();
+		video.releaseImage(subscriberID);
+		video.unsubscribe(subscriberID);
+		if (imgData == null) {
+			return null;
+		} else {
+			return imgData;
+		}
 
 	}
 

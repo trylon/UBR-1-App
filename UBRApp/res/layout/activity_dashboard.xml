@@ -14,7 +14,8 @@
         android:layout_width="fill_parent"
         android:layout_height="300dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/button3"
@@ -85,28 +86,34 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/button1"
+        android:layout_toLeftOf="@+id/button1"
         android:onClick="eStopOnClick"
         android:text="@string/EStopButton"
         android:textColor="@color/StopButton"
         android:textSize="20sp" />
 
-    <ImageView
-        android:id="@+id/robotImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ButtonEStop"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="114dp"
-        android:src="@drawable/ic_launcher" />
-
     <Button
         android:id="@+id/cmdVideo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ButtonEStop"
-        android:layout_toRightOf="@+id/robotImageView"
+        android:layout_alignBaseline="@+id/ButtonEStop"
+        android:layout_alignBottom="@+id/ButtonEStop"
+        android:layout_alignRight="@+id/outputTextView1"
         android:onClick="updateVideo"
         android:text="@string/VideoButton" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cmdVideo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp"
+        android:contentDescription="@string/RobotViewImageContent"
+        android:maxHeight="480dp"
+        android:maxWidth="640dp"
+        android:minHeight="480dp"
+        android:minWidth="640dp"
+        android:src="@drawable/nao_head" />
         
 </RelativeLayout>

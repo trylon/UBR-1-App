@@ -4,14 +4,21 @@
  */
 package androidappnaoserver;
 
+import java.awt.Graphics;
+import java.awt.Transparency;
+import java.awt.color.ColorSpace;
+import java.awt.image.*;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  * Android
@@ -95,7 +102,7 @@ public class AndroidAppNaoServer {
 		RobotConnection robot = new RobotConnection(NAO_IPADDRESS, NAO_PORT);
 
 		ServerSocket listener = new ServerSocket(Integer.parseInt(listenPort));
-		PrintWriter streamWriter;
+		DataOutputStream streamWriter;
 		try {
 
 			boolean socketOpen = true;
@@ -109,8 +116,8 @@ public class AndroidAppNaoServer {
 					// Buffered reader.
 					BufferedReader input = new BufferedReader(
 							new InputStreamReader(socket.getInputStream()));
-					streamWriter = new PrintWriter(socket.getOutputStream(),
-							true);
+					streamWriter = new DataOutputStream(
+							socket.getOutputStream());
 					String appString = input.readLine();
 
 					// Temp Output String For reciept verification.
@@ -167,7 +174,16 @@ public class AndroidAppNaoServer {
 							break;
 
 						case "v":
-							streamWriter.println(robot.getVideoFrame());
+							byte[] videoData = robot.getVideoFrame();
+							if (videoData != null) {
+								System.out.println("Image");
+								BufferedImage img = createRGBImage(videoData, 640, 480);
+								ByteArrayOutputStream baos = new ByteArrayOutputStream();
+								ImageIO.write(img, "png", baos);
+								byte[] arr = baos.toByteArray();
+								streamWriter.writeInt(arr.length);
+								streamWriter.write(arr);
+							}
 							break;
 
 						case "s":
@@ -185,5 +201,31 @@ public class AndroidAppNaoServer {
 		} finally {
 			listener.close();
 		}
+	}
+	
+	public static class ImgPanel extends JPanel
+	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		BufferedImage img;
+		public ImgPanel(BufferedImage img)
+		{
+			this.img = img;
+		}
+		
+		@Override
+		public void paint(Graphics g)
+		{
+			super.paint(g);
+			g.drawImage(img, 0, 0, null);
+		}
+	}
+	
+	private static BufferedImage createRGBImage(byte[] bytes, int width, int height) {
+	    DataBufferByte buffer = new DataBufferByte(bytes, bytes.length);
+	    ColorModel cm = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), new int[]{8, 8, 8}, false, false, Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
+	    return new BufferedImage(cm, Raster.createInterleavedRaster(buffer, width, height, width * 3, 3, new int[]{0, 1, 2}, null), false, null);
 	}
 }

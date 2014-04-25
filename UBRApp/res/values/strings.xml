@@ -42,4 +42,5 @@
     <string name="EStop">e</string>
     <string name="EStopButton">Emergency Stop</string>
     <string name="VideoButton">Video Toggle</string>
+    <string name="RobotViewImageContent">Robot View </string>
 </resources>

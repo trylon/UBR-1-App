@@ -7,12 +7,14 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -174,19 +176,12 @@ public class DashboardActivity extends Activity {
 
 	public void updateVideo(View view) {
 		/*
-		if (!isVideoStarted) {
-			vTimerTask = new TimerTask() {
-
-				@Override
-				public void run() {
-					new ASyncVideo().execute();
-				}
-			};
-			videoTimer.scheduleAtFixedRate(vTimerTask, 0, 200);
-		}
-		else {
-			isVideoStarted = true;
-		}*/
+		 * if (!isVideoStarted) { vTimerTask = new TimerTask() {
+		 * 
+		 * @Override public void run() { new ASyncVideo().execute(); } };
+		 * videoTimer.scheduleAtFixedRate(vTimerTask, 0, 200); } else {
+		 * isVideoStarted = true; }
+		 */
 		new ASyncVideo().execute();
 	}
 
@@ -197,34 +192,32 @@ public class DashboardActivity extends Activity {
 
 			byte[] arr = null;
 			Socket sImage = null;
-			String retval = "";
 			try {
 				sImage = new Socket(ip, port);
 				PrintWriter p = new PrintWriter(sImage.getOutputStream(), true);
-				BufferedReader r = new BufferedReader(new InputStreamReader(
-						sImage.getInputStream()));
+				DataInputStream streamInput = new DataInputStream(
+						sImage.getInputStream());
 				p.println(getResources().getString(R.string.VideoCommand));
-				retval = r.readLine();
-				System.out.println(retval);
-				r.close();
+				int msgLength = streamInput.readInt();
+				Log.d("VIDEODEBUG_Async", "Msg Length: " + msgLength);
+				if (msgLength > 0) {
+					arr = new byte[msgLength];
+					streamInput.readFully(arr, 0, msgLength);
+				}
+				streamInput.close();
 				p.close();
 				sImage.close();
+				return arr;
 			} catch (Exception ex) {
 				return null;
 			}
-
-			if (!retval.equals("")) {
-				arr = Base64.decode(retval.getBytes(), Base64.DEFAULT);
-				return arr;
-			}
-
-			return null;
 		}
 
 		protected void onPostExecute(byte[] arr) {
 			if (arr != null) {
-				ImageView robotView = (ImageView) findViewById(R.id.robotImageView);
+				ImageView robotView = (ImageView) findViewById(R.id.imageView1);
 				Bitmap bMap = BitmapFactory.decodeByteArray(arr, 0, arr.length);
+				Log.d("VIDEODEBUG_Post", "arr length: " + arr.length);
 				robotView.setImageBitmap(bMap);
 			}
 		}
