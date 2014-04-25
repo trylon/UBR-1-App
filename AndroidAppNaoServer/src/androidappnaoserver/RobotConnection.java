@@ -63,7 +63,7 @@ public class RobotConnection {
 		// motion.waitUntilMoveIsFinished();
 
 		// Move forward
-		motion.move(0.1f, 0.0f, 0.0f);
+		motion.move(0.2f, 0.0f, 0.0f);
 
 		System.out.println(motion.getSummary());
 	}
@@ -87,9 +87,9 @@ public class RobotConnection {
 		float moveAmountRadians = DegreesToRadians(turnAmount);
 
 		if (moveAmountRadians < 0) {
-			motion.move(0.0f, 0.0f, -0.2f);
+			motion.move(0.0f, 0.0f, -0.3f);
 		} else {
-			motion.move(0.0f, 0.0f, 0.2f);
+			motion.move(0.0f, 0.0f, 0.3f);
 		}
 
 		// Send turn command.
@@ -116,9 +116,9 @@ public class RobotConnection {
 
 		// Start stepping
 		if (left) {
-			motion.move(0.0f, 0.1f, 0.0f);
+			motion.move(0.0f, 0.2f, 0.0f);
 		} else {
-			motion.move(0.0f, -0.1f, 0.0f);
+			motion.move(0.0f, -0.2f, 0.0f);
 		}
 
 		System.out.println(motion.getSummary());
@@ -129,7 +129,7 @@ public class RobotConnection {
 	 */
 	public void Stand() {
 		motion.stopMove();
-		posture.goToPosture("StandInit", 1.0f);
+		posture.goToPosture("StandInit", 0.8f);
 		System.out.println("Standing Up.");
 	}
 
@@ -160,19 +160,24 @@ public class RobotConnection {
 		final int RESOLUTION_640px_480px = 2;
 		final int COLOR_RGB = 11;
 		final int FPS_5 = 5;
+		final int FPS_30 = 30;
+		try {
+			video.subscribeCamera(subscriberID, TOP_CAMERA,
+					RESOLUTION_640px_480px, COLOR_RGB, FPS_30);
 
-		video.subscribeCamera(subscriberID, TOP_CAMERA, RESOLUTION_640px_480px, COLOR_RGB, FPS_5);
-		
-		Variant remoteImage = video.getImageRemote(subscriberID);
+			Variant remoteImage = video.getImageRemote(subscriberID);
 
-		Variant imageV = remoteImage.getElement(6);
-		byte[] imgData = imageV.toBinary();
-		video.releaseImage(subscriberID);
-		video.unsubscribe(subscriberID);
-		if (imgData == null) {
+			Variant imageV = remoteImage.getElement(6);
+			byte[] imgData = imageV.toBinary();
+			video.releaseImage(subscriberID);
+			video.unsubscribe(subscriberID);
+			if (imgData == null) {
+				return null;
+			} else {
+				return imgData;
+			}
+		} catch (Exception ex) {
 			return null;
-		} else {
-			return imgData;
 		}
 
 	}

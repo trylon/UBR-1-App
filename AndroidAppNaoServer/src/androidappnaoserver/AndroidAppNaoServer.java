@@ -121,7 +121,7 @@ public class AndroidAppNaoServer {
 					String appString = input.readLine();
 
 					// Temp Output String For reciept verification.
-					System.out.println(appString);
+					//System.out.println(appString);
 
 					if (appString != null) {
 
@@ -176,7 +176,6 @@ public class AndroidAppNaoServer {
 						case "v":
 							byte[] videoData = robot.getVideoFrame();
 							if (videoData != null) {
-								System.out.println("Image");
 								BufferedImage img = createRGBImage(videoData, 640, 480);
 								ByteArrayOutputStream baos = new ByteArrayOutputStream();
 								ImageIO.write(img, "png", baos);

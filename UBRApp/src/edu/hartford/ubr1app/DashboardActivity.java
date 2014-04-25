@@ -48,7 +48,8 @@ public class DashboardActivity extends Activity {
 	protected String ip;
 	protected int port;
 	protected Timer videoTimer;
-	protected TimerTask vTimerTask;
+	protected VideoTimerTask vTimerTask;
+	protected ASyncVideo av;
 
 	Socket socket;
 	PrintWriter outputSocketWriter;
@@ -70,6 +71,8 @@ public class DashboardActivity extends Activity {
 	@Override
 	public void onPause() {
 		super.onPause();
+		videoTimer.cancel();
+		isVideoStarted = false;
 		eStopOnClick(null);
 		try {
 			socket.close();
@@ -81,6 +84,8 @@ public class DashboardActivity extends Activity {
 	@Override
 	public void onStop() {
 		super.onStop();
+		videoTimer.cancel();
+		isVideoStarted = false;
 		eStopOnClick(null);
 		try {
 			socket.close();
@@ -175,17 +180,44 @@ public class DashboardActivity extends Activity {
 	}
 
 	public void updateVideo(View view) {
-		/*
-		 * if (!isVideoStarted) { vTimerTask = new TimerTask() {
-		 * 
-		 * @Override public void run() { new ASyncVideo().execute(); } };
-		 * videoTimer.scheduleAtFixedRate(vTimerTask, 0, 200); } else {
-		 * isVideoStarted = true; }
-		 */
-		new ASyncVideo().execute();
+
+		if (!isVideoStarted) {
+			vTimerTask = new VideoTimerTask();
+			videoTimer = new Timer();
+			videoTimer.schedule(vTimerTask, 1, 70);
+			isVideoStarted = true;
+		} else {
+			videoTimer.cancel();
+			isVideoStarted = false;
+		}
+	}
+
+	protected class VideoTimerTask extends TimerTask {
+
+		@Override
+		public void run() {
+			//Code will not start another task until the last is complete
+			if (av != null) {
+				if (av.isDone()) {
+					av = new ASyncVideo();
+					av.execute();
+				}
+			}
+			else
+			{
+				av = new ASyncVideo();
+				av.execute();
+			}
+			
+			//Code will immediately start another task - floods images (improves framerate, but delays disabling video)
+			//new ASyncVideo().execute();
+		}
+
 	}
 
 	protected class ASyncVideo extends AsyncTask<Void, Void, byte[]> {
+
+		private boolean done = false;
 
 		@Override
 		protected byte[] doInBackground(Void... params) {
@@ -199,7 +231,7 @@ public class DashboardActivity extends Activity {
 						sImage.getInputStream());
 				p.println(getResources().getString(R.string.VideoCommand));
 				int msgLength = streamInput.readInt();
-				Log.d("VIDEODEBUG_Async", "Msg Length: " + msgLength);
+				// Log.d("VIDEODEBUG_Async", "Msg Length: " + msgLength);
 				if (msgLength > 0) {
 					arr = new byte[msgLength];
 					streamInput.readFully(arr, 0, msgLength);
@@ -217,9 +249,14 @@ public class DashboardActivity extends Activity {
 			if (arr != null) {
 				ImageView robotView = (ImageView) findViewById(R.id.imageView1);
 				Bitmap bMap = BitmapFactory.decodeByteArray(arr, 0, arr.length);
-				Log.d("VIDEODEBUG_Post", "arr length: " + arr.length);
+				// Log.d("VIDEODEBUG_Post", "arr length: " + arr.length);
 				robotView.setImageBitmap(bMap);
 			}
+			done = true;
+		}
+
+		protected boolean isDone() {
+			return done;
 		}
 
 	}

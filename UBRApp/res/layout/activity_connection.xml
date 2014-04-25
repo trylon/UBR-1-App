@@ -38,22 +38,23 @@
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:gravity="center"
-        android:inputType="phone"
+        android:inputType="numberDecimal|phone"
         android:textColor="@color/White" >
 
         <requestFocus />
     </EditText>
     
         <EditText
-        android:id="@+id/port"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnConnect"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:gravity="center"
-        android:inputType="phone"
-        android:textColor="@color/White" >
+            android:id="@+id/port"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnConnect"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="number"
+            android:textColor="@color/White" >
+
     </EditText>
 
     <TextView
