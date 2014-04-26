@@ -184,7 +184,7 @@ public class DashboardActivity extends Activity {
 		if (!isVideoStarted) {
 			vTimerTask = new VideoTimerTask();
 			videoTimer = new Timer();
-			videoTimer.schedule(vTimerTask, 1, 70);
+			videoTimer.schedule(vTimerTask, 0, 92);
 			isVideoStarted = true;
 		} else {
 			videoTimer.cancel();
