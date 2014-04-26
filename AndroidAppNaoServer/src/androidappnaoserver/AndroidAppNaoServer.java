@@ -179,9 +179,7 @@ public class AndroidAppNaoServer {
 								BufferedImage img = createRGBImage(videoData, 640, 480);
 								ByteArrayOutputStream baos = new ByteArrayOutputStream();
 								ImageIO.write(img, "png", baos);
-								byte[] arr = baos.toByteArray();
-								streamWriter.writeInt(arr.length);
-								streamWriter.write(arr);
+								streamWriter.write(baos.toByteArray());
 							}
 							break;
 

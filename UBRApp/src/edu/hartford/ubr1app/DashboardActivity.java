@@ -51,6 +51,11 @@ public class DashboardActivity extends Activity {
 	protected VideoTimerTask vTimerTask;
 	protected ASyncVideo av;
 
+	protected int numFrames = 0;
+	protected int numFailFrames = 0;
+	protected long startTime;
+	protected long endTime;
+	
 	Socket socket;
 	PrintWriter outputSocketWriter;
 
@@ -182,13 +187,19 @@ public class DashboardActivity extends Activity {
 	public void updateVideo(View view) {
 
 		if (!isVideoStarted) {
+			startTime = System.currentTimeMillis();
 			vTimerTask = new VideoTimerTask();
 			videoTimer = new Timer();
-			videoTimer.schedule(vTimerTask, 0, 92);
+			videoTimer.schedule(vTimerTask, 0, 52);
 			isVideoStarted = true;
 		} else {
+			endTime = System.currentTimeMillis();
 			videoTimer.cancel();
 			isVideoStarted = false;
+			Log.d("VIDEO_FRAMES", "Average FPS: " + (numFrames / ((endTime - startTime)/1000.0)));
+			Log.d("VIDEO_FRAMES", "Total Event Overlaps: " + numFailFrames);
+			numFrames = 0;
+			numFailFrames = 0;
 		}
 	}
 
@@ -201,6 +212,11 @@ public class DashboardActivity extends Activity {
 				if (av.isDone()) {
 					av = new ASyncVideo();
 					av.execute();
+				}
+				else
+				{
+					numFailFrames++;
+					Log.d("VIDEO_FRAMES", "Event triggered before prior process finished!");
 				}
 			}
 			else
@@ -215,42 +231,34 @@ public class DashboardActivity extends Activity {
 
 	}
 
-	protected class ASyncVideo extends AsyncTask<Void, Void, byte[]> {
+	protected class ASyncVideo extends AsyncTask<Void, Void, Bitmap> {
 
 		private boolean done = false;
 
 		@Override
-		protected byte[] doInBackground(Void... params) {
+		protected Bitmap doInBackground(Void... params) {
 
-			byte[] arr = null;
-			Socket sImage = null;
 			try {
-				sImage = new Socket(ip, port);
+				Socket sImage = new Socket(ip, port);
 				PrintWriter p = new PrintWriter(sImage.getOutputStream(), true);
 				DataInputStream streamInput = new DataInputStream(
 						sImage.getInputStream());
 				p.println(getResources().getString(R.string.VideoCommand));
-				int msgLength = streamInput.readInt();
-				// Log.d("VIDEODEBUG_Async", "Msg Length: " + msgLength);
-				if (msgLength > 0) {
-					arr = new byte[msgLength];
-					streamInput.readFully(arr, 0, msgLength);
-				}
+				Bitmap b = BitmapFactory.decodeStream(streamInput);
 				streamInput.close();
 				p.close();
 				sImage.close();
-				return arr;
+				return b;
 			} catch (Exception ex) {
 				return null;
 			}
 		}
 
-		protected void onPostExecute(byte[] arr) {
-			if (arr != null) {
+		protected void onPostExecute(Bitmap bMap) {
+			if (bMap != null) {
 				ImageView robotView = (ImageView) findViewById(R.id.imageView1);
-				Bitmap bMap = BitmapFactory.decodeByteArray(arr, 0, arr.length);
-				// Log.d("VIDEODEBUG_Post", "arr length: " + arr.length);
 				robotView.setImageBitmap(bMap);
+				numFrames++;
 			}
 			done = true;
 		}
