@@ -90,8 +90,9 @@ public class DashboardActivity extends Activity {
 			}
 		});
 		if (returnIntent != null) {
-			String[] ipPort = returnIntent.getStringExtra(MainActivity.IP_PORT)
-					.split(":");
+			/*String[] ipPort = returnIntent.getStringExtra(MainActivity.IP_PORT)
+					.split(":");*/
+			String[] ipPort = {"127.0.0.1", "5997"};
 			ip = ipPort[0];
 			port = Integer.parseInt(ipPort[1]);
 		}
