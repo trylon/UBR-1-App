@@ -60,6 +60,23 @@ public class RobotConnection {
 		
 		System.out.println(motion.getSummary());
 	}
+	
+	/**
+	 * Set the walk speed.
+	 * @param newSpeed
+	 */
+	public void SetSpeed(float newSpeed)
+	{
+		if (newSpeed < 0f)
+		{
+			newSpeed = 0f;
+		}
+		else if (newSpeed > 1.0f)
+		{
+			newSpeed = 1.0f;
+		}
+		walkSpeed = newSpeed;	
+	}
 
 	/**
 	 * Have Nao walk forward.
