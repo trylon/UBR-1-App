@@ -43,4 +43,7 @@
     <string name="EStopButton">Emergency Stop</string>
     <string name="VideoButton">Video Toggle</string>
     <string name="RobotViewImageContent">Robot View </string>
+    <string name="message">Message</string>
+    <string name="SayMessage">Say Message</string>
+    <string name="walkSpeed">Walk Speed</string>
 </resources>

@@ -115,5 +115,43 @@
         android:minHeight="480dp"
         android:minWidth="640dp"
         android:src="@drawable/nao_head" />
+
+    <EditText
+        android:id="@+id/textMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView1"
+        android:layout_toLeftOf="@+id/button1"
+        android:ems="10"
+        android:hint="@string/message" />
+
+    <Button
+        android:id="@+id/cmdSayMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginLeft="14dp"
+        android:onClick="sayMessage"
+        android:text="@string/SayMessage" />
+
+    <TextView
+        android:id="@+id/txtSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/motionSpeed"
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_marginBottom="14dp"
+        android:text="@string/walkSpeed" />
+
+    <SeekBar
+        android:id="@+id/motionSpeed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView1"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:max="@integer/maxVal"
+        android:progress="@integer/progressVal" />
         
 </RelativeLayout>

@@ -10,7 +10,9 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -139,6 +141,15 @@ public class DashboardActivity extends Activity {
 		}
 	}
 
+	public void sayMessage(View view)
+	{
+		EditText textMessage = (EditText) findViewById(R.id.textMessage);
+		String msg = textMessage.getText().toString();
+		tryConnectSocket();
+		outputSocketWriter.println(msg);
+		tryDisconnectSocket();
+	}
+	
 	/**
 	 * Emergency Stop Message Dispatched that stops, sits and un-stiffens the
 	 * robot.
@@ -311,6 +322,10 @@ public class DashboardActivity extends Activity {
 			t.setText(getResources().getString(R.string.WalkCommand));
 			outputSocketWriter.println(getResources().getString(
 					R.string.WalkCommand));
+			SeekBar s = (SeekBar) findViewById(R.id.motionSpeed);
+			int val = s.getProgress();
+			float f = (float) (val / 10.0);
+			outputSocketWriter.println(f);
 		}
 		// If the robot is not stiffened stiffen it.
 		else if (!isStiffened) {

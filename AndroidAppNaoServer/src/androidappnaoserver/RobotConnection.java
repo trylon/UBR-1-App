@@ -28,6 +28,11 @@ public class RobotConnection {
 		}
 	}
 
+	public void sayMessage(String msg)
+	{
+		tts.say(msg);
+	}
+	
 	public void Stiffen() {
 		System.out.println("Stiffening Joints");
 
@@ -156,6 +161,7 @@ public class RobotConnection {
 
 		final String subscriberID = "NaoServer";
 		final int TOP_CAMERA = 0;
+		final int RESOLUTION_160px_120px = 0;
 		final int RESOLUTION_320px_240px = 1;
 		final int RESOLUTION_640px_480px = 2;
 		final int COLOR_RGB = 11;
@@ -163,7 +169,7 @@ public class RobotConnection {
 		final int FPS_30 = 30;
 		try {
 			video.subscribeCamera(subscriberID, TOP_CAMERA,
-					RESOLUTION_640px_480px, COLOR_RGB, FPS_30);
+					RESOLUTION_160px_120px, COLOR_RGB, FPS_30);
 
 			Variant remoteImage = video.getImageRemote(subscriberID);
 

@@ -150,6 +150,8 @@ public class AndroidAppNaoServer {
 							break;
 
 						case "w":
+							String motionVal = input.readLine();
+							float val = Float.parseFloat(motionVal);
 							robot.Walk();
 							break;
 
@@ -176,16 +178,18 @@ public class AndroidAppNaoServer {
 						case "v":
 							byte[] videoData = robot.getVideoFrame();
 							if (videoData != null) {
-								BufferedImage img = createRGBImage(videoData, 640, 480);
+								BufferedImage img = createRGBImage(videoData, 160, 120);
 								ByteArrayOutputStream baos = new ByteArrayOutputStream();
-								ImageIO.write(img, "png", baos);
+								ImageIO.write(img, "jpeg", baos);
 								streamWriter.write(baos.toByteArray());
 							}
 							break;
 
 						case "s":
-						default:
 							robot.Stop();
+							break;
+						default:
+							robot.sayMessage(appString);
 							break;
 						}
 
