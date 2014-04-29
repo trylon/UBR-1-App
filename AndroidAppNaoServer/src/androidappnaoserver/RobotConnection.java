@@ -8,9 +8,14 @@ public class RobotConnection {
 	protected ALRobotPostureProxy posture;
 	protected ALTextToSpeechProxy tts;
 	protected ALVideoDeviceProxy video;
+	
+	private float walkSpeed = 0.2f;
+	
+	private boolean isWalking = false;
 
 	public RobotConnection(String ip, int port) {
 
+		isWalking = false;
 		motion = new ALMotionProxy(ip, port);
 		posture = new ALRobotPostureProxy(ip, port);
 		tts = new ALTextToSpeechProxy(ip, port);
@@ -30,6 +35,8 @@ public class RobotConnection {
 
 	public void Stiffen() {
 		System.out.println("Stiffening Joints");
+		
+		isWalking = false;
 
 		motion.stiffnessInterpolation(new Variant(new String[] { "Body" }),
 				new Variant(new float[] { 1.0f }), new Variant(
@@ -44,11 +51,13 @@ public class RobotConnection {
 	public void Unstiffen() {
 
 		System.out.println("Relaxing Joints");
+		
+		isWalking = false;
 
 		motion.stiffnessInterpolation(new Variant(new String[] { "Body" }),
 				new Variant(new float[] { 0.0f }), new Variant(
 						new float[] { 0.5f }));
-
+		
 		System.out.println(motion.getSummary());
 	}
 
@@ -57,13 +66,17 @@ public class RobotConnection {
 	 */
 	public void Walk() {
 		// Set move posture
-		motion.moveInit();
+		if (!isWalking)
+		{
+			motion.moveInit();			
+		}
 
 		// Wait for ready.
 		// motion.waitUntilMoveIsFinished();
-
+		
 		// Move forward
-		motion.move(0.2f, 0.0f, 0.0f);
+		motion.move(walkSpeed, 0.0f, 0.0f);
+		isWalking = true;
 
 		System.out.println(motion.getSummary());
 	}
@@ -77,8 +90,11 @@ public class RobotConnection {
 	public void Turn(float turnAmount) {
 		System.out.println("Turning " + turnAmount + " degrees.");
 
-		// Get to ready position.
-		motion.moveInit();
+		if (!isWalking)
+		{
+			// Get to ready position.
+			motion.moveInit();
+		}
 
 		// Wait for hardward to finish moving
 		// motion.waitUntilMoveIsFinished();
@@ -87,9 +103,23 @@ public class RobotConnection {
 		float moveAmountRadians = DegreesToRadians(turnAmount);
 
 		if (moveAmountRadians < 0) {
-			motion.move(0.0f, 0.0f, -0.3f);
+			if(!isWalking)
+			{
+				motion.move(0.0f, 0.0f, -0.3f);
+			}
+			else
+			{			
+				motion.move(moveSpeed, 0.0f, -0.15f);
+			}
 		} else {
-			motion.move(0.0f, 0.0f, 0.3f);
+			if (!isWalking)
+			{
+				motion.move(0.0f, 0.0f, 0.3f);
+			}
+			else
+			{
+				motion.move(moveSpeed, 0.0f, 0.15f);
+			}
 		}
 
 		// Send turn command.
@@ -108,6 +138,7 @@ public class RobotConnection {
 	public void Strafe(boolean left) {
 		System.out.println("Stepping to the " + (left ? "left" : "right"));
 
+		isWalking = false;
 		// Get ready to turn.
 		motion.moveInit();
 
@@ -128,6 +159,7 @@ public class RobotConnection {
 	 * Stand Nao up.
 	 */
 	public void Stand() {
+		isWalking = false;
 		motion.stopMove();
 		posture.goToPosture("StandInit", 0.8f);
 		System.out.println("Standing Up.");
@@ -137,17 +169,20 @@ public class RobotConnection {
 	 * Sit Nao down.
 	 */
 	public void Sit() {
+		isWalking = false;
 		motion.stopMove();
 		posture.goToPosture("Sit", 1.0f);
 		System.out.println("Sitting Down.");
 	}
 
 	public void Stop() {
+		isWalking = false;
 		motion.stopMove();
 		System.out.println("Stopping Movement.");
 	}
 
 	public void emergencyStop() {
+		isWalking = false;
 		Sit();
 		Unstiffen();
 	}
