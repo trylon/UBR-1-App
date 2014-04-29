@@ -50,13 +50,12 @@ public class MainActivity extends Activity {
 	{
 		super.onResume();
 		
-		socketString = null;
+		//socketString = null;
 		Intent returnIntent = getIntent();
 		if (returnIntent != null) 
 		{
 			socketString = returnIntent.getStringExtra(ConnectionActivity.IP_PORT);
 			updateViews();
-
 		}
 	}
 
@@ -69,7 +68,7 @@ public class MainActivity extends Activity {
 		Button connectButton = (Button) findViewById(R.id.connect);
 		Button driveButton = (Button) findViewById(R.id.drive);
 		
-		if(isValidSocket(socketString)) 
+		if(isValidSocket()) 
 		{
 			connectButton.setText(R.string.manage_connection);
 			driveButton.setVisibility(View.VISIBLE);
@@ -82,10 +81,25 @@ public class MainActivity extends Activity {
 	}
 	
 	
-	public boolean isValidSocket(String socket)
+	public boolean isValidSocket()
 	{
 		//return false;
-		return socket != null;
+		return socketString != null;
 		
 	}
+	//for testing
+	public void setSocket(String newSocket)
+	{
+		
+		socketString = newSocket;
+		
+		
+	}
+	//for testing
+	public void disconnectSocket()
+	{
+		
+		socketString = null;
+	}
+	
 }
