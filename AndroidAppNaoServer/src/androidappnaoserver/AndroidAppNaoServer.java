@@ -152,6 +152,7 @@ public class AndroidAppNaoServer {
 						case "w":
 							String motionVal = input.readLine();
 							float val = Float.parseFloat(motionVal);
+							robot.SetSpeed(val);
 							robot.Walk();
 							break;
 

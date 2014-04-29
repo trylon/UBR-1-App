@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="maxVal">10</integer>
-    <integer name="progressVal">1</integer>
+    <integer name="maxVal">20</integer>
+    <integer name="progressVal">10</integer>
 </resources>

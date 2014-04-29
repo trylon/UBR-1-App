@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -57,7 +58,7 @@ public class DashboardActivity extends Activity {
 	protected int numFailFrames = 0;
 	protected long startTime;
 	protected long endTime;
-	
+
 	Socket socket;
 	PrintWriter outputSocketWriter;
 
@@ -66,6 +67,28 @@ public class DashboardActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dashboard);
 		Intent returnIntent = getIntent();
+		final TextView speedText = (TextView) findViewById(R.id.txtSpeed);
+		speedText.setText(getResources().getString(R.string.walkSpeed) + ": 0");
+		SeekBar s = (SeekBar) findViewById(R.id.motionSpeed);
+		s.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+
+			}
+
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				float f = (float) ((seekBar.getProgress() - 10)/10.0);
+				speedText.setText(getResources().getString(R.string.walkSpeed) + ": " + f);
+			}
+		});
 		if (returnIntent != null) {
 			String[] ipPort = returnIntent.getStringExtra(MainActivity.IP_PORT)
 					.split(":");
@@ -141,15 +164,14 @@ public class DashboardActivity extends Activity {
 		}
 	}
 
-	public void sayMessage(View view)
-	{
+	public void sayMessage(View view) {
 		EditText textMessage = (EditText) findViewById(R.id.textMessage);
 		String msg = textMessage.getText().toString();
 		tryConnectSocket();
 		outputSocketWriter.println(msg);
 		tryDisconnectSocket();
 	}
-	
+
 	/**
 	 * Emergency Stop Message Dispatched that stops, sits and un-stiffens the
 	 * robot.
@@ -207,7 +229,8 @@ public class DashboardActivity extends Activity {
 			endTime = System.currentTimeMillis();
 			videoTimer.cancel();
 			isVideoStarted = false;
-			Log.d("VIDEO_FRAMES", "Average FPS: " + (numFrames / ((endTime - startTime)/1000.0)));
+			Log.d("VIDEO_FRAMES", "Average FPS: "
+					+ (numFrames / ((endTime - startTime) / 1000.0)));
 			Log.d("VIDEO_FRAMES", "Total Event Overlaps: " + numFailFrames);
 			numFrames = 0;
 			numFailFrames = 0;
@@ -218,26 +241,24 @@ public class DashboardActivity extends Activity {
 
 		@Override
 		public void run() {
-			//Code will not start another task until the last is complete
+			// Code will not start another task until the last is complete
 			if (av != null) {
 				if (av.isDone()) {
 					av = new ASyncVideo();
 					av.execute();
-				}
-				else
-				{
+				} else {
 					numFailFrames++;
-					Log.d("VIDEO_FRAMES", "Event triggered before prior process finished!");
+					Log.d("VIDEO_FRAMES",
+							"Event triggered before prior process finished!");
 				}
-			}
-			else
-			{
+			} else {
 				av = new ASyncVideo();
 				av.execute();
 			}
-			
-			//Code will immediately start another task - floods images (improves framerate, but delays disabling video)
-			//new ASyncVideo().execute();
+
+			// Code will immediately start another task - floods images
+			// (improves framerate, but delays disabling video)
+			// new ASyncVideo().execute();
 		}
 
 	}
@@ -323,7 +344,7 @@ public class DashboardActivity extends Activity {
 			outputSocketWriter.println(getResources().getString(
 					R.string.WalkCommand));
 			SeekBar s = (SeekBar) findViewById(R.id.motionSpeed);
-			int val = s.getProgress();
+			int val = s.getProgress() - 10;
 			float f = (float) (val / 10.0);
 			outputSocketWriter.println(f);
 		}

@@ -72,15 +72,16 @@ public class RobotConnection {
 	 */
 	public void SetSpeed(float newSpeed)
 	{
-		if (newSpeed < 0f)
+		if (newSpeed < -1.0f)
 		{
-			newSpeed = 0f;
+			newSpeed = -1.0f;
 		}
 		else if (newSpeed > 1.0f)
 		{
 			newSpeed = 1.0f;
 		}
 		walkSpeed = newSpeed;	
+		System.out.println("Speed:" + walkSpeed);
 	}
 
 	/**
@@ -131,7 +132,7 @@ public class RobotConnection {
 			}
 			else
 			{			
-				motion.move(moveSpeed, 0.0f, -0.15f);
+				motion.move(walkSpeed, 0.0f, -0.3f);
 			}
 		} else {
 			if (!isWalking)
@@ -140,7 +141,7 @@ public class RobotConnection {
 			}
 			else
 			{
-				motion.move(moveSpeed, 0.0f, 0.15f);
+				motion.move(walkSpeed, 0.0f, 0.3f);
 			}
 		}
 

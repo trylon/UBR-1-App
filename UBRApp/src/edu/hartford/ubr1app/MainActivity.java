@@ -56,7 +56,6 @@ public class MainActivity extends Activity {
 		{
 			socketString = returnIntent.getStringExtra(ConnectionActivity.IP_PORT);
 			updateViews();
-
 		}
 	}
 
