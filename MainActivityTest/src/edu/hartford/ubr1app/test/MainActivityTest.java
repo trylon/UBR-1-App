@@ -127,7 +127,7 @@ public class MainActivityTest extends ActivityUnitTestCase<MainActivity> {
 		 assertEquals("On valid socket, Drive button should be visible", View.VISIBLE, driveButton.getVisibility());
 			
 		 //check label changes Connect --> Manage Connection
-		 assertEquals("Connect button should read \"Connect\"","Manage Connection", connectButton.getText());
+		 assertEquals("Connect button should read \"Manage Connection\"","Manage Connection", connectButton.getText());
 		 assertEquals("Drive button should read \"Drive\"","Drive", driveButton.getText());
 		
 	}
@@ -137,8 +137,6 @@ public class MainActivityTest extends ActivityUnitTestCase<MainActivity> {
 	 */
 	public void testIntentData()
 	{	
-		String testSocketString = "localhost:4096";
-		
 		reset();
 		connectButton.performClick();
 		
