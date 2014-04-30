@@ -12,14 +12,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+/**
+ * Main Activity
+ * 
+ * Handles transitioning between activities and updating the main interface 
+ * according to the current connection status.
+ * 
+ * @authors TLawless, ZGuan, JHenricks, MStjarre
+ */
 public class MainActivity extends Activity {
-
+	
 	public final static String IP_PORT = "edu.hartford.ubr1app.IP_PORT";
 	private String socketString;
 
-	//private Button connectButton;
-	//private Button driveButton;
-
+	/**
+	 * Initializes new activity or re-initializes previous activity
+	 * 
+	 * @param savedInstanceState null if new activity, or saved 
+	 * 		bundle from prior activity
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -27,30 +38,47 @@ public class MainActivity extends Activity {
 		updateViews();
 	}
 
+
+	/**
+	 * Creates new connection intent and start activity
+	 * 
+	 * @param view **unused**
+	 */
 	public void connectOnClick(View view) {
 		Intent connectIntent = new Intent(this, ConnectionActivity.class);
 		startActivity(connectIntent);
 	}
 
+	/**
+	 * Creates new drive intent and start activity
+	 * 
+	 * @param view **unused**
+	 */
 	public void driveOnClick(View view) {
 		Intent driveIntent = new Intent(this, DashboardActivity.class);
 		driveIntent.putExtra(IP_PORT, socketString);
 		startActivity(driveIntent);
 	}
 
+	/**
+	 * Overrides and implements custom options menu when present
+	 * 
+	 * @param menu XML menu to be implemented
+	 * @return boolean on success
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
+	/**
+	 * Retrieves intent and updates buttons and socketString accordingly
+	 */
 	@Override
-	public void onResume()
-	{
+	public void onResume() {
 		super.onResume();
-		
-		//socketString = null;
+
 		Intent returnIntent = getIntent();
 		if (returnIntent != null) 
 		{
@@ -60,46 +88,44 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * Call updateViews when something changes in the application
+	 * Called when connection changes in the application. Updates buttons
 	 */
-	private void updateViews() 
-	{
-		// update connect button
+	private void updateViews() {
 		Button connectButton = (Button) findViewById(R.id.connect);
 		Button driveButton = (Button) findViewById(R.id.drive);
-		
-		if(isValidSocket()) 
-		{
+
+		if (isValidSocket()) {
 			connectButton.setText(R.string.manage_connection);
 			driveButton.setVisibility(View.VISIBLE);
-		} 
-		else 
-		{
+		} else {
 			connectButton.setText(R.string.connect);
 			driveButton.setVisibility(View.INVISIBLE);
 		}
 	}
-	
-	
-	public boolean isValidSocket()
-	{
-		//return false;
-		return socketString != null;
-		
+
+	/**
+	 * Checks for socket validity
+	 * 
+	 * @return boolean true if socket is not null
+	 */
+	public boolean isValidSocket() {
+		return socketString != null;		
 	}
-	//for testing
-	public void setSocket(String newSocket)
-	{
-		
-		socketString = newSocket;
-		
-		
+
+	/**
+	 * Mutator for current socket string
+	 * 
+	 * @param newSocket the new socket to mutate current
+	 */
+	public void setSocket(String newSocket) {		
+		socketString = newSocket;		
 	}
-	//for testing
-	public void disconnectSocket()
-	{
-		
+
+	/**
+	 * Mutator for dumping current socket
+	 */
+	public void disconnectSocket() {		
 		socketString = null;
 	}
-	
+
 }

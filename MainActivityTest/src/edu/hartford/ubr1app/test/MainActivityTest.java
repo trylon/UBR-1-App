@@ -5,19 +5,30 @@ import android.test.ActivityUnitTestCase;
 import edu.hartford.ubr1app.MainActivity;
 
 
-
+/**
+ * Main Activity Test
+ * 
+ * Handles testing of socket, activity, and intent
+ * 
+ * @authors TLawless, ZGuan, JHenricks, MStjarre
+ */
 public class MainActivityTest extends ActivityUnitTestCase<MainActivity> {
 	
 	private MainActivity mMainActivity;
 	
-	public MainActivityTest(){
-		
-		super(MainActivity.class);
-		
+	/**
+	 * Super-constructor for MainActivity
+	 */
+	public MainActivityTest() {		
+		super(MainActivity.class);		
 	}
 	
-	@Override
-	 
+	/**
+	 * Prepare intent for testing and create activity variable
+	 * 
+	 * @throws Exception
+	 */
+	@Override	 
 	protected void setUp() throws Exception {
 		super.setUp();
 		
@@ -25,19 +36,20 @@ public class MainActivityTest extends ActivityUnitTestCase<MainActivity> {
 		        MainActivity.class);
 		startActivity(intent, null, null);
 		
-		mMainActivity = getActivity();
-		
+		mMainActivity = getActivity();		
 	}
 	
-	public void testPreconditions(){
-		
-		//passes test if the MainActivity was created sucessfully. 
-		assertNotNull("mMainActivity is null...", mMainActivity );
-			
+	/**
+	 * Test for checking creation of MainActivity
+	 */
+	public void testPreconditions() {		 
+		assertNotNull("mMainActivity is null...", mMainActivity );			
 	}
 	
-	public void testSocketState()
-	{	
+	/**
+	 * Test for checking sockets
+	 */
+	public void testSocketState() {	
 		 assertTrue(!mMainActivity.isValidSocket());
 		 mMainActivity.setSocket("localhost:4096");
 		 assertTrue(mMainActivity.isValidSocket());	
@@ -46,15 +58,10 @@ public class MainActivityTest extends ActivityUnitTestCase<MainActivity> {
 	/*public void testButtonState()
 	{
 		mMainActivity.setSocket(null);
-		//when connection is null
-		
+		//when connection is null		
 	}
 	
 	public void testIntentData()
-	{
-		
+	{		
 	}*/
-	
-	
-
 }
