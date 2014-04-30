@@ -90,7 +90,7 @@ public class MainActivity extends Activity {
 	/**
 	 * Called when connection changes in the application. Updates buttons
 	 */
-	private void updateViews() {
+	public void updateViews() {
 		Button connectButton = (Button) findViewById(R.id.connect);
 		Button driveButton = (Button) findViewById(R.id.drive);
 
